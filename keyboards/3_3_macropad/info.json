@@ -1,0 +1,41 @@
+{
+    "manufacturer": "Var",
+    "keyboard_name": "3_3_macropad",
+    "maintainer": ".",
+    "bootloader": "caterina",
+    "debounce": 5,
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true
+    },
+    "matrix_pins": {
+        "direct": [
+            ["E6", "F4"],
+            ["B4", "F7"],
+            ["B5", "B6"]
+        ]
+    },
+    "processor": "atmega32u4",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT_default": {
+            "layout": [
+                { "matrix": [0, 0], "x": 0, "y": 0 },
+                { "matrix": [1, 0], "x": 0, "y": 1 },
+                { "matrix": [2, 0], "x": 0, "y": 2 },
+                { "matrix": [0, 1], "x": 1, "y": 0 },
+                { "matrix": [1, 1], "x": 1, "y": 1 },
+                { "matrix": [2, 1], "x": 1, "y": 2 }
+            ]
+        }
+    },
+}
