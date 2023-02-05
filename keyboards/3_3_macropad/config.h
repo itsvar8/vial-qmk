@@ -24,7 +24,7 @@
 #define ENCODER_RESOLUTION 4
 #define ENCODER_DIRECTION_FLIP
 
-#define FORCE_NKRO
+//#define FORCE_NKRO
 
 #define RGB_DI_PIN D1
 #define DRIVER_LED_TOTAL 6

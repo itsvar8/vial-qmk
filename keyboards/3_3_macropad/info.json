@@ -3,7 +3,7 @@
     "keyboard_name": "3_3_macropad",
     "maintainer": ".",
     "bootloader": "caterina",
-    "debounce": 5,
+    "debounce": 0,
     "features": {
         "bootmagic": true,
         "command": false,
