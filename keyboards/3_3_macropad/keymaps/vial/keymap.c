@@ -40,25 +40,3 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [3] = {  ENCODER_CCW_CW(RGB_RMOD, RGB_MOD),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
 };
 #endif
-
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    switch(get_highest_layer(layer_state)) {
-        case 1:
-            rgb_matrix_set_color(3, RGB_RED);
-			rgb_matrix_set_color(4, RGB_RED);
-			rgb_matrix_set_color(5, RGB_RED);
-            break;
-        case 2:
-            rgb_matrix_set_color(3, RGB_YELLOW);
-			rgb_matrix_set_color(4, RGB_YELLOW);
-			rgb_matrix_set_color(5, RGB_YELLOW);			
-            break;
-        case 3:
-            rgb_matrix_set_color(3, RGB_BLUE);
-			rgb_matrix_set_color(4, RGB_BLUE);
-			rgb_matrix_set_color(5, RGB_BLUE);
-            break;
-        default:
-            break;
-    }
-}
