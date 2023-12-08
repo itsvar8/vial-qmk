@@ -46,6 +46,13 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 			case 5:
 				rgb_matrix_set_color(i, RGB_TEAL);
 				break;
+			case 6:
+				rgb_matrix_set_color(i, RGB_ORANGE);
+				break;
+			case 7:
+				rgb_matrix_set_color(i, RGB_PURPLE);
+				break;
+
 			default:
 				break;
 		}
