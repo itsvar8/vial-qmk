@@ -1,3 +1,6 @@
+// Copyright 2022 Var (@itsvar8)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
@@ -25,7 +28,7 @@ led_config_t g_led_config = {
 
 #endif
 
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     switch(get_highest_layer(layer_state)) {
         case 1:
             rgb_matrix_set_color(3, RGB_RED);
@@ -42,7 +45,26 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 			rgb_matrix_set_color(4, RGB_BLUE);
 			rgb_matrix_set_color(5, RGB_BLUE);
             break;
+		case 4:
+            rgb_matrix_set_color(3, RGB_MAGENTA);
+			rgb_matrix_set_color(4, RGB_MAGENTA);
+			rgb_matrix_set_color(5, RGB_MAGENTA);
+            break;
+		case 5:
+            rgb_matrix_set_color(3, RGB_TEAL);
+			rgb_matrix_set_color(4, RGB_TEAL);
+			rgb_matrix_set_color(5, RGB_TEAL);
+            break;
         default:
             break;
     }
+	return false;
+}
+
+uint16_t keycode_config(uint16_t keycode) {
+    return keycode;
+}
+
+uint8_t mod_config(uint8_t mod) {
+    return mod;
 }

@@ -24,7 +24,8 @@
     "usb": {
         "device_version": "1.0.0",
         "pid": "0x0001",
-        "vid": "0x4156"
+        "vid": "0x4156",
+		"wait_for": true
     },
     "layouts": {
         "LAYOUT_default": {
