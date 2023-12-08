@@ -29,34 +29,26 @@ led_config_t g_led_config = {
 #endif
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    switch(get_highest_layer(layer_state)) {
-        case 1:
-            rgb_matrix_set_color(3, RGB_RED);
-			rgb_matrix_set_color(4, RGB_RED);
-			rgb_matrix_set_color(5, RGB_RED);
-            break;
-        case 2:
-            rgb_matrix_set_color(3, RGB_YELLOW);
-			rgb_matrix_set_color(4, RGB_YELLOW);
-			rgb_matrix_set_color(5, RGB_YELLOW);			
-            break;
-        case 3:
-            rgb_matrix_set_color(3, RGB_BLUE);
-			rgb_matrix_set_color(4, RGB_BLUE);
-			rgb_matrix_set_color(5, RGB_BLUE);
-            break;
-		case 4:
-            rgb_matrix_set_color(3, RGB_MAGENTA);
-			rgb_matrix_set_color(4, RGB_MAGENTA);
-			rgb_matrix_set_color(5, RGB_MAGENTA);
-            break;
-		case 5:
-            rgb_matrix_set_color(3, RGB_TEAL);
-			rgb_matrix_set_color(4, RGB_TEAL);
-			rgb_matrix_set_color(5, RGB_TEAL);
-            break;
-        default:
-            break;
+	for (uint8_t i = 3; i < led_max; i++) {
+		switch(get_highest_layer(layer_state)) {
+			case 1:
+				rgb_matrix_set_color(i, RGB_RED);
+				break;
+			case 2:
+				rgb_matrix_set_color(i, RGB_YELLOW);
+				break;
+			case 3:
+				rgb_matrix_set_color(i, RGB_BLUE);
+				break;
+			case 4:
+				rgb_matrix_set_color(i, RGB_MAGENTA);
+				break;
+			case 5:
+				rgb_matrix_set_color(i, RGB_TEAL);
+				break;
+			default:
+				break;
+		}
     }
 	return false;
 }
