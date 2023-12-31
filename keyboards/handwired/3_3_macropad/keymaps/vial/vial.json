@@ -1,4 +1,26 @@
 {
+	"customKeycodes": [
+	{"name": "Cycle Layers",
+	 "title": "Cycle Layers",
+	 "shortName": "CYCLE_LAYERS"
+	},
+	{"name": "Super Alt Tab",
+	 "title": "Super Alt Tab",
+	 "shortName": "ALT_TAB"
+	},
+	{"name": "Inverted Super Alt Tab",
+	 "title": "Inverted Super Alt Tab",
+	 "shortName": "INV_ALT_TAB"
+	},
+	{"name": "Alt Esc",
+	 "title": "Alt Esc",
+	 "shortName": "ALT_ESC"
+	},
+	{"name": "XPLR",
+	 "title": "New Explorer Window",
+	 "shortName": "XPLR"
+	}
+  ],
     "lighting": "vialrgb",
     "matrix": {
         "rows": 3,

@@ -35,6 +35,7 @@
 //#define ENABLE_RGB_MATRIX_SPLASH
 
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_PINWHEEL
+#define RGB_MATRIX_DEFAULT_SPD 50 // Sets the default animation speed, if none has been set
 
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
