@@ -3,10 +3,6 @@
     "productId":"0x0002",
     "vendorId":"0x4156",
 	"customKeycodes": [
-	{"name": "Cycle Layers",
-	 "title": "Cycle Layers",
-	 "shortName": "CYCLE_LAYERS"
-	},
 	{"name": "Super Alt Tab",
 	 "title": "Super Alt Tab",
 	 "shortName": "ALT_TAB"
@@ -24,9 +20,6 @@
 	 "shortName": "XPLR"
 	}
   ],
-    "vial": {
-        "midi": "advanced",
-    },
 	"lighting": "vialrgb",
     "matrix": {
         "rows": 4,
