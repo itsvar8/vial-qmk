@@ -18,11 +18,14 @@
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
+#define MIDI_ADVANCED
 
 #define ENCODERS_PAD_A { GP5, GP7 }
 #define ENCODERS_PAD_B { GP6, GP8 }
 //#define ENCODER_RESOLUTION 4
 #define ENCODER_DIRECTION_FLIP
+
+#define TAP_CODE_DELAY 28
 
 #define WS2812_DI_PIN GP0
 #define DRIVER_LED_TOTAL 34
@@ -33,7 +36,8 @@
 
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
 
-#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_UP_DOWN
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_UP_DOWN // Sets the default mode, if none has been set
+#define RGB_MATRIX_DEFAULT_SPD 50 // Sets the default animation speed, if none has been set
 
 #define ENABLE_RGB_MATRIX_ALPHAS_MODS
 #define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
