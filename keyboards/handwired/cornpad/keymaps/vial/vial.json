@@ -22,6 +22,10 @@
 	{"name": "XPLR",
 	 "title": "New Explorer Window",
 	 "shortName": "XPLR"
+	},
+	{"name": "EGRV",
+	 "title": "è",
+	 "shortName": "EGRV"
 	}
   ],
     "vial": {
