@@ -1,6 +1,6 @@
 {
     "manufacturer": "Var",
-    "keyboard_name": "cornpad",
+    "keyboard_name": "cornepad",
     "maintainer": "Var",
     "bootloader": "rp2040",
     "diode_direction": "COL2ROW",

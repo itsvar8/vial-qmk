@@ -1,5 +1,5 @@
 {
-    "name":"cornpad",
+    "name":"cornepad",
     "productId":"0x0002",
     "vendorId":"0x4156",
 	"customKeycodes": [
@@ -23,9 +23,17 @@
 	 "title": "New Explorer Window",
 	 "shortName": "XPLR"
 	},
-	{"name": "EGRV",
-	 "title": "è",
-	 "shortName": "EGRV"
+	{"name": "UNDO",
+	 "title": "Ctrl + Z",
+	 "shortName": "UNDO"
+	},
+	{"name": "REDO",
+	 "title": "Ctrl + Shift + Z",
+	 "shortName": "REDO"
+	},
+	{"name": "SCR_REC",
+	 "title": "AMD Screen Record",
+	 "shortName": "SCR_REC"
 	}
   ],
     "vial": {

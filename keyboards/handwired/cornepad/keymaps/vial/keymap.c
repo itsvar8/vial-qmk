@@ -6,20 +6,15 @@
 bool is_alt_tab_active = false; // ADD this near the beginning of keymap.c
 uint16_t alt_tab_timer = 0;     // we will be using them soon.
 
-#define WAIT_BEFORE_SPAM 440  // milliseconds before spamming
-#define SPAM_DELAY 10  // milliseconds between spams
-bool egrv_pressed = false;
-uint16_t spam_timer = 0;
-uint16_t spam_delay = WAIT_BEFORE_SPAM;
-
-
 enum custom_keycodes {          // Make sure have the awesome keycode ready
   CYCLE_LAYERS = QK_KB_0,
   ALT_TAB,
   INV_ALT_TAB,
   ALT_ESC,
   XPLR,
-  EGRV,
+  UNDO,
+  REDO,
+  SCR_REC,
 };
 
 // 1st layer on the cycle
@@ -71,14 +66,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		unregister_code(KC_LGUI);
 	  }
 	  break;
-	case EGRV:
+	case UNDO:
 	  if (record->event.pressed) {
-		  SEND_STRING("`e");
-		  egrv_pressed = true;
-          spam_timer = timer_read(); // Reset spam timer
+		  register_code(KC_LCTL);
+		  tap_code(KC_Z);
 	  } else {
-		  egrv_pressed = false;
-		  spam_delay = WAIT_BEFORE_SPAM;
+		unregister_code(KC_LCTL);
+	  }
+	  break;
+	case REDO:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  register_code(KC_LSFT);
+		  tap_code(KC_Z);
+	  } else {
+		unregister_code(KC_LCTL);
+		unregister_code(KC_LSFT);
+	  }
+	  break;
+	case SCR_REC:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  register_code(KC_LSFT);
+		  tap_code(KC_E);
+	  } else {
+		unregister_code(KC_LCTL);
+		unregister_code(KC_LSFT);
 	  }
 	  break;
 	case CYCLE_LAYERS:
@@ -116,13 +129,6 @@ void matrix_scan_user(void) { // The very important timer.
 	  unregister_code(KC_LALT);
     }
   }
-  if (egrv_pressed) {
-    if (timer_elapsed(spam_timer) > spam_delay) {
-		SEND_STRING("`e");
-		spam_timer = timer_read();  // Reset spam timer
-		spam_delay = SPAM_DELAY;
-	}
-  }
 }
 
 void keyboard_post_init_user(void) {
@@ -154,23 +160,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------+-------------+--------|                 +----------+-----------+-----------+-----------+                |--------+-------------+-------------+-------------+----------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS,                       KC_F1,      KC_F2,      KC_F3,    KC_TRNS,                  KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,         KC_PIPE,
   //|------------+-------------+-------------+-------------+--------+--------------|  +----------+-----------+-----------+-----------+  |-------------+--------+-------------+-------------+-------------+----------------|
-                                      KC_TRNS,      KC_TRNS, KC_TRNS,       KC_TRNS,       KC_F10,     KC_F11,     KC_F12,     KC_NUM,   SGUI(KC_RGHT),  KC_DEL,      KC_TRNS,      KC_DQUO
+                                      KC_TRNS,      KC_TRNS, KC_TRNS, SGUI(KC_LEFT),       KC_F10,     KC_F11,     KC_F12,     KC_NUM,   SGUI(KC_RGHT),  KC_DEL,      KC_TRNS,      KC_DQUO
                                    //`---------------------------------------------'  `----------------------------------------------'  `--------------------------------------------------'|
   ),                                                                                                                                      
     [2] = LAYOUT_default(                                                                                                                 
   //,---------------------------------------------------------------.                 ,----------------------------------------------.                ,-------------------------------------------------------------------.
-          KC_TRNS,        KC_UP,      KC_TRNS,      KC_TRNS,  KC_GRV,                       KC_F7,      KC_F8,      KC_F9,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
+          KC_TRNS,        KC_UP,      KC_TRNS,      KC_TRNS, KC_TRNS,                       KC_F7,      KC_F8,      KC_F9,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
   //|------------+-------------+-------------+-------------+--------|                 +----------+-----------+-----------+-----------+                |--------+-------------+-------------+-------------+----------------|
-          KC_LEFT,      KC_DOWN,      KC_RGHT,      KC_TRNS, KC_TILD,                       KC_F4,      KC_F5,      KC_F6,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
+          KC_LEFT,      KC_DOWN,      KC_RGHT,      KC_TRNS, KC_TRNS,                       KC_F4,      KC_F5,      KC_F6,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
   //|------------+-------------+-------------+-------------+--------|                 +----------+-----------+-----------+-----------+                |--------+-------------+-------------+-------------+----------------|
           KC_MINS,       KC_EQL,      KC_LBRC,      KC_RBRC, KC_BSLS,                       KC_F1,      KC_F2,      KC_F3,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
   //|------------+-------------+-------------+-------------+--------+--------------|  +----------+-----------+-----------+-----------+  |-------------+--------+-------------+-------------+-------------+----------------|
-                                      KC_QUOT,      KC_TRNS, KC_TRNS, SGUI(KC_LEFT),       KC_F10,     KC_F11,     KC_F12,     KC_NUM,         KC_TRNS, KC_TRNS,      KC_TRNS,      KC_TRNS
+                                      KC_QUOT,      KC_TRNS,  KC_TAB, SGUI(KC_LEFT),       KC_F10,     KC_F11,     KC_F12,     KC_NUM,   SGUI(KC_RGHT), KC_TRNS,      KC_TRNS,      KC_TRNS
                                    //`---------------------------------------------'  `----------------------------------------------'  `--------------------------------------------------'|
   ),                                                                                                                                      
     [3] = LAYOUT_default(                                                                                                                 
   //,---------------------------------------------------------------.                 ,----------------------------------------------.                ,-------------------------------------------------------------------.
-          QK_BOOT,      KC_TRNS,         EGRV,      KC_TRNS, KC_TRNS,                     KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
+          QK_BOOT,      KC_TRNS,      KC_TRNS,      SCR_REC, KC_TRNS,                     KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
   //|------------+-------------+-------------+-------------+--------|                 +----------+-----------+-----------+-----------+                |--------+-------------+-------------+-------------+----------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS,                     KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,                  KC_TRNS,      KC_TRNS,      KC_TRNS,      KC_TRNS,         KC_TRNS,
   //|------------+-------------+-------------+-------------+--------|                 +----------+-----------+-----------+-----------+                |--------+-------------+-------------+-------------+----------------|
@@ -183,9 +189,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [0] = {  ENCODER_CCW_CW( C(KC_Z), C(S(KC_Z)) ), ENCODER_CCW_CW( INV_ALT_TAB, ALT_TAB )  },
-	[1] = {  ENCODER_CCW_CW( KC_TRNS,    KC_TRNS ), ENCODER_CCW_CW(     KC_PGUP, KC_PGDN )  },
-	[2] = {  ENCODER_CCW_CW( KC_HOME,     KC_END ), ENCODER_CCW_CW(     KC_TRNS, KC_TRNS )  },
-	[3] = {  ENCODER_CCW_CW( KC_TRNS,    KC_TRNS ), ENCODER_CCW_CW(     KC_TRNS, KC_TRNS )  },
+    [0] = {  ENCODER_CCW_CW(    UNDO,    REDO ), ENCODER_CCW_CW( INV_ALT_TAB, ALT_TAB )  },
+	[1] = {  ENCODER_CCW_CW( KC_TRNS, KC_TRNS ), ENCODER_CCW_CW(     KC_PGUP, KC_PGDN )  },
+	[2] = {  ENCODER_CCW_CW( KC_HOME,  KC_END ), ENCODER_CCW_CW(     KC_TRNS, KC_TRNS )  },
+	[3] = {  ENCODER_CCW_CW( KC_TRNS, KC_TRNS ), ENCODER_CCW_CW(     KC_TRNS, KC_TRNS )  },
 };
 #endif
