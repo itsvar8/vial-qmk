@@ -23,15 +23,15 @@
 	 "title": "New Explorer Window",
 	 "shortName": "XPLR"
 	},
-	{"name": "UNDO",
+	{"name": "Undo",
 	 "title": "Ctrl + Z",
 	 "shortName": "UNDO"
 	},
-	{"name": "REDO",
+	{"name": "Redo",
 	 "title": "Ctrl + Shift + Z",
 	 "shortName": "REDO"
 	},
-	{"name": "SCR_REC",
+	{"name": "Rec",
 	 "title": "AMD Screen Record",
 	 "shortName": "SCR_REC"
 	}
