@@ -1,12 +1,13 @@
 # cornepad
 
 ![cornepad](https://from2d.com/wp-content/uploads/2024/01/cornepad-2000px.png)
+Build guide and 3D files --> [from2D.com](https://from2d.com/) --> Freebies
 
 Single piece 36 keys Corne layout with a center 4*4 numpad, 2 rotary encoders and RGB. ( -7.5 | 0 | +7.5 ) deg. rotation
 
 * Keyboard Maintainer: [Var](https://github.com/itsvar8)
 * Hardware Supported: RP2040
-* Hardware Availability: Info and 3D files --> [from2D.com](https://from2d.com/) --> Freebies
+* Hardware Availability: See build guide
 
 Make example for this keyboard (after setting up your build environment):
 
