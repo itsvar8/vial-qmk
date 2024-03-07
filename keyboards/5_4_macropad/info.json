@@ -1,0 +1,46 @@
+{
+    "manufacturer": "Var",
+    "keyboard_name": "5_4_macropad",
+    "maintainer": "Var",
+    "bootloader": "rp2040",
+	"debounce": 1,
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true
+    },
+	"matrix_pins": {
+        "direct": [
+            ["GP26", "GP3",  "GP2"  ],
+            ["GP22", "GP9", "GP5"  ],
+            ["GP18", "GP17", "GP13" ]
+        ]
+    },
+    "processor": "RP2040",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0003",
+        "vid": "0x4156"
+    },
+    "layouts": {
+        "LAYOUT_default": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0,    "y": 0},
+                {"matrix": [0, 1], "x": 1.25, "y": 0.25},
+                {"matrix": [0, 2], "x": 2.5,  "y": 0},
+				
+                {"matrix": [1, 0], "x": 0.25, "y": 1.25},
+                {"matrix": [1, 1], "x": 1.25, "y": 1.25},
+                {"matrix": [1, 2], "x": 2.25, "y": 1.25},
+				
+                {"matrix": [2, 0], "x": 0,    "y": 2.5},
+                {"matrix": [2, 1], "x": 1.25, "y": 2.25},
+				{"matrix": [2, 2], "x": 2.5,  "y": 2.5}
+			]
+        }
+    }
+}
