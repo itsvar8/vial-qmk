@@ -50,6 +50,26 @@
 	{"name": "Clear Keyboard",
 	 "title": "This will clear all mods and keys currently pressed",
 	 "shortName": "CLR_KBD"
+	},
+	{"name": "MIDI_UP",
+	 "title": "MIDI control up",
+	 "shortName": "MIDI_UP"
+	},
+	{"name": "MIDI_DN",
+	 "title": "MIDI control down",
+	 "shortName": "MIDI_DN"
+	},
+	{"name": "CC_RST",
+	 "title": "MIDI CC Reset",
+	 "shortName": "CC_RST"
+	},
+	{"name": "CC_UP",
+	 "title": "Next MIDI CC",
+	 "shortName": "CC_UP"
+	},
+	{"name": "CC_DN",
+	 "title": "Previous MIDI CC",
+	 "shortName": "CC_DN"
 	}
   ],
     "vial": {
