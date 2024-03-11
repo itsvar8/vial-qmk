@@ -5,12 +5,15 @@
 
 extern MidiDevice midi_device;
 
-bool is_alt_tab_active = false; // ADD this near the beginning of keymap.c
-uint16_t alt_tab_timer = 0;     // we will be using them soon.
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
+bool is_layer_move_active = false;
+uint16_t layer_move_timer = 0;
 
 int8_t current_MIDI_cc = 0;
 
-enum custom_keycodes {          // Make sure have the awesome keycode ready
+enum custom_keycodes {
   NEXT_LAYER = QK_KB_0,
   PREV_LAYER,
   ALT_TAB,
@@ -39,45 +42,55 @@ enum custom_keycodes {          // Make sure have the awesome keycode ready
 #define LAYER_CYCLE_END   9
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) { // This will do most of the grunt work with the keycodes.
-	case NEXT_LAYER:
-      // Our logic will happen on presses, nothing is done on releases
-      if (!record->event.pressed) { 
-        // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
-        return false;
-      }
-      uint8_t current_layer = get_highest_layer(layer_state);
-
-      // Check if we are within the range, if not quit
-      if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
-        return false;
-      }
-
-      uint8_t next_layer = current_layer + 1;
-      if (next_layer > LAYER_CYCLE_END) {
-          next_layer = LAYER_CYCLE_START;
-      }
-      layer_move(next_layer);
+  switch (keycode) {
+    case NEXT_LAYER:
+      if (record->event.pressed) {
+		if (!is_layer_move_active) {
+		is_layer_move_active = true;
+		}
+	  layer_move_timer = timer_read();
+      } else {
+		  if (is_layer_move_active) {
+		  uint8_t current_layer = get_highest_layer(layer_state);
+	      
+          // Check if we are within the range, if not quit
+          if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
+            return false;
+          }
+	      
+          uint8_t next_layer = current_layer + 1;
+          if (next_layer > LAYER_CYCLE_END) {
+              next_layer = LAYER_CYCLE_START;
+          }
+          layer_move(next_layer);
+		  is_layer_move_active = false;
+		  }
+	  }
       break;
 	case PREV_LAYER:
-      // Our logic will happen on presses, nothing is done on releases
-      if (!record->event.pressed) { 
-        // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
-        return false;
-      }
-	  int8_t current_layer2 = get_highest_layer(layer_state);
+      if (record->event.pressed) {
+		if (!is_layer_move_active) {
+		is_layer_move_active = true;
+		}
+	  layer_move_timer = timer_read();
+      } else {
+		  if (is_layer_move_active) {
+		  int8_t current_layer2 = get_highest_layer(layer_state);
 
-      // Check if we are within the range, if not quit
-      if (current_layer2 > LAYER_CYCLE_END || current_layer2 < LAYER_CYCLE_START) {
-        return false;
-      }
+          // Check if we are within the range, if not quit
+          if (current_layer2 > LAYER_CYCLE_END || current_layer2 < LAYER_CYCLE_START) {
+            return false;
+          }
 
-      int8_t prev_layer = current_layer2 - 1;
-      if (prev_layer < LAYER_CYCLE_START) {
-          prev_layer = LAYER_CYCLE_END;
-      }
-      layer_move(prev_layer);
-	  break;
+          int8_t prev_layer = current_layer2 - 1;
+          if (prev_layer < LAYER_CYCLE_START) {
+              prev_layer = LAYER_CYCLE_END;
+          }
+          layer_move(prev_layer);
+		  is_layer_move_active = false;
+		  }
+	  }
+      break;
     case ALT_TAB:
       if (record->event.pressed) {
         if (!is_alt_tab_active) {
@@ -214,18 +227,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-void matrix_scan_user(void) { // The very important timer.
+void matrix_scan_user(void) {
   if (is_alt_tab_active) {
     if (timer_elapsed(alt_tab_timer) > 800) {
       is_alt_tab_active = false;
 	  unregister_code(KC_LALT);
     }
   }
+  if (is_layer_move_active) {
+    if (timer_elapsed(layer_move_timer) > 250) {
+	  is_layer_move_active = false;
+	  layer_move(0);
+	}
+  }
 }
 
 void keyboard_post_init_user(void) {
-    vial_tap_dance_entry_t td = { NEXT_LAYER,
-                                  TO(0),
+    vial_tap_dance_entry_t td = { KC_NO,
+                                  KC_NO,
                                   KC_NO,
                                   KC_NO,
                                   TAPPING_TERM };
@@ -239,7 +258,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_LEFT,       KC_TAB,      KC_RGHT,
   //|------------+-------------+-------------|
-           KC_ESC,      KC_DOWN,        TD(0)
+           KC_ESC,      KC_DOWN,   NEXT_LAYER
   //`----------------------------------------'|
   ),
     [1] = LAYOUT_default(                                                                                                                 
@@ -248,7 +267,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [2] = LAYOUT_default(                                                                                                                 
@@ -257,7 +276,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [3] = LAYOUT_default(                                                                                                                 
@@ -266,7 +285,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [4] = LAYOUT_default(                                                                                                                 
@@ -275,7 +294,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [5] = LAYOUT_default(                                                                                                                 
@@ -284,7 +303,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [6] = LAYOUT_default(                                                                                                                 
@@ -293,7 +312,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [7] = LAYOUT_default(                                                                                                                 
@@ -302,7 +321,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [8] = LAYOUT_default(                                                                                                                 
@@ -311,7 +330,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      KC_TRNS,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      KC_TRNS,        TD(0)
+          KC_TRNS,      KC_TRNS,      KC_TRNS,
   //`----------------------------------------'|
   ),
     [9] = LAYOUT_default(                                                                                                                 
@@ -320,7 +339,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+-------------|
           KC_TRNS,      QK_BOOT,      KC_TRNS,
   //|------------+-------------+-------------|
-          KC_TRNS,      CLR_KBD,        TD(0)
+          KC_TRNS,      CLR_KBD,      KC_TRNS,
   //`----------------------------------------'|
   ),
 };
