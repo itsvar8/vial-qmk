@@ -3,27 +3,94 @@
 
 #include QMK_KEYBOARD_H
 
-bool is_alt_tab_active = false; // ADD this near the beginning of keymap.c
-uint16_t alt_tab_timer = 0;     // we will be using them soon.
+extern MidiDevice midi_device;
 
-enum custom_keycodes {          // Make sure have the awesome keycode ready
-  CYCLE_LAYERS = QK_KB_0,
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
+bool is_layer_move_active = false;
+uint16_t layer_move_timer = 0;
+
+int8_t current_MIDI_cc = 0;
+
+enum custom_keycodes {
+  NEXT_LAYER = QK_KB_0,
+  PREV_LAYER,
   ALT_TAB,
   INV_ALT_TAB,
   ALT_ESC,
   XPLR,
   UNDO,
   REDO,
+  REDO_Y,
   SCR_REC,
+  CLR_EPR,
+  CLR_KBD,
+  MIDI_UP,
+  MIDI_DN,
+  CC_RST,
+  CC_UP,
+  CC_DN,
 };
+
+#define MIDI_CYCLE_START 0
+#define MIDI_CYCLE_END   63
 
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
 // Last layer on the cycle
-#define LAYER_CYCLE_END   7
+#define LAYER_CYCLE_END   9
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) { // This will do most of the grunt work with the keycodes.
+  switch (keycode) {
+    case NEXT_LAYER:
+      if (record->event.pressed) {
+		if (!is_layer_move_active) {
+		is_layer_move_active = true;
+		}
+	  layer_move_timer = timer_read();
+      } else {
+		  if (is_layer_move_active) {
+		  uint8_t current_layer = get_highest_layer(layer_state);
+	      
+          // Check if we are within the range, if not quit
+          if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
+            return false;
+          }
+	      
+          uint8_t next_layer = current_layer + 1;
+          if (next_layer > LAYER_CYCLE_END) {
+              next_layer = LAYER_CYCLE_START;
+          }
+          layer_move(next_layer);
+		  is_layer_move_active = false;
+		  }
+	  }
+      break;
+	case PREV_LAYER:
+      if (record->event.pressed) {
+		if (!is_layer_move_active) {
+		is_layer_move_active = true;
+		}
+	  layer_move_timer = timer_read();
+      } else {
+		  if (is_layer_move_active) {
+		  int8_t current_layer2 = get_highest_layer(layer_state);
+
+          // Check if we are within the range, if not quit
+          if (current_layer2 > LAYER_CYCLE_END || current_layer2 < LAYER_CYCLE_START) {
+            return false;
+          }
+
+          int8_t prev_layer = current_layer2 - 1;
+          if (prev_layer < LAYER_CYCLE_START) {
+              prev_layer = LAYER_CYCLE_END;
+          }
+          layer_move(prev_layer);
+		  is_layer_move_active = false;
+		  }
+	  }
+      break;
     case ALT_TAB:
       if (record->event.pressed) {
         if (!is_alt_tab_active) {
@@ -84,6 +151,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		unregister_code(KC_LSFT);
 	  }
 	  break;
+	case REDO_Y:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  tap_code(KC_Y);
+	  } else {
+		unregister_code(KC_LCTL);
+	  }
+	  break;
 	case SCR_REC:
 	  if (record->event.pressed) {
 		  register_code(KC_LCTL);
@@ -94,46 +169,82 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		unregister_code(KC_LSFT);
 	  }
 	  break;
-	case CYCLE_LAYERS:
-      // Our logic will happen on presses, nothing is done on releases
-      if (!record->event.pressed) { 
-        // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
-        return false;
+	case CLR_EPR:
+	  if (record->event.pressed) {
+		  eeconfig_init();
+	  } else {
+	  }
+	  break;
+	case CLR_KBD:
+	  if (record->event.pressed) {
+		  clear_keyboard();
+	  } else {
+	  }
+	  break;
+	case MIDI_UP:
+	  if (record->event.pressed) {
+          midi_send_cc(&midi_device, 0, current_MIDI_cc, 65);
+	  } else {
+	  }
+	  break;
+	case MIDI_DN:
+	  if (record->event.pressed) {
+          midi_send_cc(&midi_device, 0, current_MIDI_cc, 63);
+	  } else {
+	  }
+	  break;
+	case CC_RST:
+      if (record->event.pressed) {
+          current_MIDI_cc = MIDI_CYCLE_START;
+      } else {
       }
-
-      uint8_t current_layer = get_highest_layer(layer_state);
-
-      // Check if we are within the range, if not quit
-      if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
-        return false;
+      break;
+	case CC_UP:
+      if (record->event.pressed) {
+          if (current_MIDI_cc > MIDI_CYCLE_END || current_MIDI_cc < MIDI_CYCLE_START) {
+            return false;
+          } else {
+			  current_MIDI_cc++;
+          }
+	  }
+	  if (current_MIDI_cc > MIDI_CYCLE_END) {
+          current_MIDI_cc = MIDI_CYCLE_START;
       }
-
-      uint8_t next_layer = current_layer + 1;
-      if (next_layer > LAYER_CYCLE_END) {
-          next_layer = LAYER_CYCLE_START;
+      break;
+	case CC_DN:
+      if (record->event.pressed) {
+          if (current_MIDI_cc > MIDI_CYCLE_END || current_MIDI_cc < MIDI_CYCLE_START) {
+            return false;
+          } else {
+			  current_MIDI_cc--;
+          }
+	  }
+	  if (current_MIDI_cc < MIDI_CYCLE_START) {
+          current_MIDI_cc = MIDI_CYCLE_END;
       }
-      layer_move(next_layer);
-      return false;
-
-    // Process other keycodes normally
-    default:
-      return true;
+      break;
   }
   return true;
 }
 
-void matrix_scan_user(void) { // The very important timer.
+void matrix_scan_user(void) {
   if (is_alt_tab_active) {
     if (timer_elapsed(alt_tab_timer) > 800) {
       is_alt_tab_active = false;
 	  unregister_code(KC_LALT);
     }
   }
+  if (is_layer_move_active) {
+    if (timer_elapsed(layer_move_timer) > 250) {
+	  is_layer_move_active = false;
+	  layer_move(0);
+	}
+  }
 }
 
 void keyboard_post_init_user(void) {
-    vial_tap_dance_entry_t td = { CYCLE_LAYERS,
-                                  TO(0),
+    vial_tap_dance_entry_t td = { KC_NO,
+                                  KC_NO,
                                   KC_NO,
                                   KC_NO,
                                   TAPPING_TERM };
