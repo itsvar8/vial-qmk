@@ -1,0 +1,659 @@
+{
+    "name":"5_4_macropad",
+    "productId":"0x0003",
+    "vendorId":"0x4156",
+	"customKeycodes": [
+	{"name": "Next Layer",
+	 "title": "Next Layer",
+	 "shortName": "NEXT_LAYER"
+	},
+	{"name": "Previous Layer",
+	 "title": "Previous Layer",
+	 "shortName": "PREV_LAYER"
+	},
+	{"name": "Super Alt Tab",
+	 "title": "Use in combination with the inverted version on an encoder to quickly switch between opened apps",
+	 "shortName": "ALT_TAB"
+	},
+	{"name": "Inverted Super Alt Tab",
+	 "title": "Use in combination with the non inverted version on an encoder to quickly switch between opened apps",
+	 "shortName": "INV_ALT_TAB"
+	},
+	{"name": "Alt Esc",
+	 "title": "Cycles through the active windows in the order they were opened (Alt + Esc)",
+	 "shortName": "ALT_ESC"
+	},
+	{"name": "XPLR",
+	 "title": "New Explorer Window (Win + E)",
+	 "shortName": "XPLR"
+	},
+	{"name": "Undo",
+	 "title": "Ctrl + Z",
+	 "shortName": "UNDO"
+	},
+	{"name": "Redo",
+	 "title": "Ctrl + Shift + Z",
+	 "shortName": "REDO"
+	},
+	{"name": "Redo Alternative",
+	 "title": "Ctrl + Y",
+	 "shortName": "REDO_Y"
+	},
+	{"name": "Rec",
+	 "title": "AMD Screen Record (Ctrl + Shift + E)",
+	 "shortName": "SCR_REC"
+	},
+	{"name": "Clear EEPROM",
+	 "title": "Reinitializes the keyboard’s EEPROM (persistent memory)",
+	 "shortName": "CLR_EPR"
+	},
+	{"name": "Clear Keyboard",
+	 "title": "This will clear all mods and keys currently pressed",
+	 "shortName": "CLR_KBD"
+	},
+	{"name": "MIDI_UP",
+	 "title": "MIDI control up",
+	 "shortName": "MIDI_UP"
+	},
+	{"name": "MIDI_DN",
+	 "title": "MIDI control down",
+	 "shortName": "MIDI_DN"
+	},
+	{"name": "CC_RST",
+	 "title": "MIDI CC Reset",
+	 "shortName": "CC_RST"
+	},
+	{"name": "CC_UP",
+	 "title": "Next MIDI CC",
+	 "shortName": "CC_UP"
+	},
+	{"name": "CC_DN",
+	 "title": "Previous MIDI CC",
+	 "shortName": "CC_DN"
+	},
+	{"name": "CC_00_UP",
+	 "title": "MIDI CC 0 UP",
+	 "shortName": "CC_00_UP"
+	},
+	{"name": "CC_00_DN",
+	 "title": "MIDI CC 0 DOWN",
+	 "shortName": "CC_00_DN"
+	},
+	{"name": "CC_01_UP",
+	 "title": "MIDI CC 1 UP",
+	 "shortName": "CC_01_UP"
+	},
+	{"name": "CC_01_DN",
+	 "title": "MIDI CC 1 DOWN",
+	 "shortName": "CC_01_DN"
+	},
+	{"name": "CC_02_UP",
+	 "title": "MIDI CC 2 UP",
+	 "shortName": "CC_02_UP"
+	},
+	{"name": "CC_02_DN",
+	 "title": "MIDI CC 2 DOWN",
+	 "shortName": "CC_02_DN"
+	},
+	{"name": "CC_03_UP",
+	 "title": "MIDI CC 3 UP",
+	 "shortName": "CC_03_UP"
+	},
+	{"name": "CC_03_DN",
+	 "title": "MIDI CC 3 DOWN",
+	 "shortName": "CC_03_DN"
+	},
+	{"name": "CC_04_UP",
+	 "title": "MIDI CC 4 UP",
+	 "shortName": "CC_04_UP"
+	},
+	{"name": "CC_04_DN",
+	 "title": "MIDI CC 4 DOWN",
+	 "shortName": "CC_04_DN"
+	},
+	{"name": "CC_05_UP",
+	 "title": "MIDI CC 5 UP",
+	 "shortName": "CC_05_UP"
+	},
+	{"name": "CC_05_DN",
+	 "title": "MIDI CC 5 DOWN",
+	 "shortName": "CC_05_DN"
+	},
+	{"name": "CC_06_UP",
+	 "title": "MIDI CC 6 UP",
+	 "shortName": "CC_06_UP"
+	},
+	{"name": "CC_06_DN",
+	 "title": "MIDI CC 6 DOWN",
+	 "shortName": "CC_06_DN"
+	},
+	{"name": "CC_07_UP",
+	 "title": "MIDI CC 7 UP",
+	 "shortName": "CC_07_UP"
+	},
+	{"name": "CC_07_DN",
+	 "title": "MIDI CC 7 DOWN",
+	 "shortName": "CC_07_DN"
+	},
+	{"name": "CC_08_UP",
+	 "title": "MIDI CC 8 UP",
+	 "shortName": "CC_08_UP"
+	},
+	{"name": "CC_08_DN",
+	 "title": "MIDI CC 8 DOWN",
+	 "shortName": "CC_08_DN"
+	},
+	{"name": "CC_09_UP",
+	 "title": "MIDI CC 9 UP",
+	 "shortName": "CC_09_UP"
+	},
+	{"name": "CC_09_DN",
+	 "title": "MIDI CC 9 DOWN",
+	 "shortName": "CC_09_DN"
+	},
+	{"name": "CC_10_UP",
+	 "title": "MIDI CC 10 UP",
+	 "shortName": "CC_10_UP"
+	},
+	{"name": "CC_10_DN",
+	 "title": "MIDI CC 10 DOWN",
+	 "shortName": "CC_10_DN"
+	},
+	{"name": "CC_11_UP",
+	 "title": "MIDI CC 11 UP",
+	 "shortName": "CC_11_UP"
+	},
+	{"name": "CC_11_DN",
+	 "title": "MIDI CC 11 DOWN",
+	 "shortName": "CC_11_DN"
+	},
+	{"name": "CC_12_UP",
+	 "title": "MIDI CC 12 UP",
+	 "shortName": "CC_12_UP"
+	},
+	{"name": "CC_12_DN",
+	 "title": "MIDI CC 12 DOWN",
+	 "shortName": "CC_12_DN"
+	},
+	{"name": "CC_13_UP",
+	 "title": "MIDI CC 13 UP",
+	 "shortName": "CC_13_UP"
+	},
+	{"name": "CC_13_DN",
+	 "title": "MIDI CC 13 DOWN",
+	 "shortName": "CC_13_DN"
+	},
+	{"name": "CC_14_UP",
+	 "title": "MIDI CC 14 UP",
+	 "shortName": "CC_14_UP"
+	},
+	{"name": "CC_14_DN",
+	 "title": "MIDI CC 14 DOWN",
+	 "shortName": "CC_14_DN"
+	},
+	{"name": "CC_15_UP",
+	 "title": "MIDI CC 15 UP",
+	 "shortName": "CC_15_UP"
+	},
+	{"name": "CC_15_DN",
+	 "title": "MIDI CC 15 DOWN",
+	 "shortName": "CC_15_DN"
+	},
+	{"name": "CC_16_UP",
+	 "title": "MIDI CC 16 UP",
+	 "shortName": "CC_16_UP"
+	},
+	{"name": "CC_16_DN",
+	 "title": "MIDI CC 16 DOWN",
+	 "shortName": "CC_16_DN"
+	},
+	{"name": "CC_17_UP",
+	 "title": "MIDI CC 17 UP",
+	 "shortName": "CC_17_UP"
+	},
+	{"name": "CC_17_DN",
+	 "title": "MIDI CC 17 DOWN",
+	 "shortName": "CC_17_DN"
+	},
+	{"name": "CC_18_UP",
+	 "title": "MIDI CC 18 UP",
+	 "shortName": "CC_18_UP"
+	},
+	{"name": "CC_18_DN",
+	 "title": "MIDI CC 18 DOWN",
+	 "shortName": "CC_18_DN"
+	},
+	{"name": "CC_19_UP",
+	 "title": "MIDI CC 19 UP",
+	 "shortName": "CC_19_UP"
+	},
+	{"name": "CC_19_DN",
+	 "title": "MIDI CC 19 DOWN",
+	 "shortName": "CC_19_DN"
+	},
+	{"name": "CC_20_UP",
+	 "title": "MIDI CC 20 UP",
+	 "shortName": "CC_20_UP"
+	},
+	{"name": "CC_20_DN",
+	 "title": "MIDI CC 20 DOWN",
+	 "shortName": "CC_20_DN"
+	},
+	{"name": "CC_21_UP",
+	 "title": "MIDI CC 21 UP",
+	 "shortName": "CC_21_UP"
+	},
+	{"name": "CC_21_DN",
+	 "title": "MIDI CC 21 DOWN",
+	 "shortName": "CC_21_DN"
+	},
+	{"name": "CC_22_UP",
+	 "title": "MIDI CC 22 UP",
+	 "shortName": "CC_22_UP"
+	},
+	{"name": "CC_22_DN",
+	 "title": "MIDI CC 22 DOWN",
+	 "shortName": "CC_22_DN"
+	},
+	{"name": "CC_23_UP",
+	 "title": "MIDI CC 23 UP",
+	 "shortName": "CC_23_UP"
+	},
+	{"name": "CC_23_DN",
+	 "title": "MIDI CC 23 DOWN",
+	 "shortName": "CC_23_DN"
+	},
+	{"name": "CC_24_UP",
+	 "title": "MIDI CC 24 UP",
+	 "shortName": "CC_24_UP"
+	},
+	{"name": "CC_24_DN",
+	 "title": "MIDI CC 24 DOWN",
+	 "shortName": "CC_24_DN"
+	},
+	{"name": "CC_25_UP",
+	 "title": "MIDI CC 25 UP",
+	 "shortName": "CC_25_UP"
+	},
+	{"name": "CC_25_DN",
+	 "title": "MIDI CC 25 DOWN",
+	 "shortName": "CC_25_DN"
+	},
+	{"name": "CC_26_UP",
+	 "title": "MIDI CC 26 UP",
+	 "shortName": "CC_26_UP"
+	},
+	{"name": "CC_26_DN",
+	 "title": "MIDI CC 26 DOWN",
+	 "shortName": "CC_26_DN"
+	},
+	{"name": "CC_27_UP",
+	 "title": "MIDI CC 27 UP",
+	 "shortName": "CC_27_UP"
+	},
+	{"name": "CC_27_DN",
+	 "title": "MIDI CC 27 DOWN",
+	 "shortName": "CC_27_DN"
+	},
+	{"name": "CC_28_UP",
+	 "title": "MIDI CC 28 UP",
+	 "shortName": "CC_28_UP"
+	},
+	{"name": "CC_28_DN",
+	 "title": "MIDI CC 28 DOWN",
+	 "shortName": "CC_28_DN"
+	},
+	{"name": "CC_29_UP",
+	 "title": "MIDI CC 29 UP",
+	 "shortName": "CC_29_UP"
+	},
+	{"name": "CC_29_DN",
+	 "title": "MIDI CC 29 DOWN",
+	 "shortName": "CC_29_DN"
+	},
+	{"name": "CC_30_UP",
+	 "title": "MIDI CC 30 UP",
+	 "shortName": "CC_30_UP"
+	},
+	{"name": "CC_30_DN",
+	 "title": "MIDI CC 30 DOWN",
+	 "shortName": "CC_30_DN"
+	},
+	{"name": "CC_31_UP",
+	 "title": "MIDI CC 31 UP",
+	 "shortName": "CC_31_UP"
+	},
+	{"name": "CC_31_DN",
+	 "title": "MIDI CC 31 DOWN",
+	 "shortName": "CC_31_DN"
+	},
+	{"name": "CC_32_UP",
+	 "title": "MIDI CC 32 UP",
+	 "shortName": "CC_32_UP"
+	},
+	{"name": "CC_32_DN",
+	 "title": "MIDI CC 32 DOWN",
+	 "shortName": "CC_32_DN"
+	},
+	{"name": "CC_33_UP",
+	 "title": "MIDI CC 33 UP",
+	 "shortName": "CC_33_UP"
+	},
+	{"name": "CC_33_DN",
+	 "title": "MIDI CC 33 DOWN",
+	 "shortName": "CC_33_DN"
+	},
+	{"name": "CC_34_UP",
+	 "title": "MIDI CC 34 UP",
+	 "shortName": "CC_34_UP"
+	},
+	{"name": "CC_34_DN",
+	 "title": "MIDI CC 34 DOWN",
+	 "shortName": "CC_34_DN"
+	},
+	{"name": "CC_35_UP",
+	 "title": "MIDI CC 35 UP",
+	 "shortName": "CC_35_UP"
+	},
+	{"name": "CC_35_DN",
+	 "title": "MIDI CC 35 DOWN",
+	 "shortName": "CC_35_DN"
+	},
+	{"name": "CC_36_UP",
+	 "title": "MIDI CC 36 UP",
+	 "shortName": "CC_36_UP"
+	},
+	{"name": "CC_36_DN",
+	 "title": "MIDI CC 36 DOWN",
+	 "shortName": "CC_36_DN"
+	},
+	{"name": "CC_37_UP",
+	 "title": "MIDI CC 37 UP",
+	 "shortName": "CC_37_UP"
+	},
+	{"name": "CC_37_DN",
+	 "title": "MIDI CC 37 DOWN",
+	 "shortName": "CC_37_DN"
+	},
+	{"name": "CC_38_UP",
+	 "title": "MIDI CC 38 UP",
+	 "shortName": "CC_38_UP"
+	},
+	{"name": "CC_38_DN",
+	 "title": "MIDI CC 38 DOWN",
+	 "shortName": "CC_38_DN"
+	},
+	{"name": "CC_39_UP",
+	 "title": "MIDI CC 39 UP",
+	 "shortName": "CC_39_UP"
+	},
+	{"name": "CC_39_DN",
+	 "title": "MIDI CC 39 DOWN",
+	 "shortName": "CC_39_DN"
+	},
+	{"name": "CC_40_UP",
+	 "title": "MIDI CC 40 UP",
+	 "shortName": "CC_40_UP"
+	},
+	{"name": "CC_40_DN",
+	 "title": "MIDI CC 40 DOWN",
+	 "shortName": "CC_40_DN"
+	},
+	{"name": "CC_41_UP",
+	 "title": "MIDI CC 41 UP",
+	 "shortName": "CC_41_UP"
+	},
+	{"name": "CC_41_DN",
+	 "title": "MIDI CC 41 DOWN",
+	 "shortName": "CC_41_DN"
+	},
+	{"name": "CC_42_UP",
+	 "title": "MIDI CC 42 UP",
+	 "shortName": "CC_42_UP"
+	},
+	{"name": "CC_42_DN",
+	 "title": "MIDI CC 42 DOWN",
+	 "shortName": "CC_42_DN"
+	},
+	{"name": "CC_43_UP",
+	 "title": "MIDI CC 43 UP",
+	 "shortName": "CC_43_UP"
+	},
+	{"name": "CC_43_DN",
+	 "title": "MIDI CC 43 DOWN",
+	 "shortName": "CC_43_DN"
+	},
+	{"name": "CC_44_UP",
+	 "title": "MIDI CC 44 UP",
+	 "shortName": "CC_44_UP"
+	},
+	{"name": "CC_44_DN",
+	 "title": "MIDI CC 44 DOWN",
+	 "shortName": "CC_44_DN"
+	},
+	{"name": "CC_45_UP",
+	 "title": "MIDI CC 45 UP",
+	 "shortName": "CC_45_UP"
+	},
+	{"name": "CC_45_DN",
+	 "title": "MIDI CC 45 DOWN",
+	 "shortName": "CC_45_DN"
+	},
+	{"name": "CC_46_UP",
+	 "title": "MIDI CC 46 UP",
+	 "shortName": "CC_46_UP"
+	},
+	{"name": "CC_46_DN",
+	 "title": "MIDI CC 46 DOWN",
+	 "shortName": "CC_46_DN"
+	},
+	{"name": "CC_47_UP",
+	 "title": "MIDI CC 47 UP",
+	 "shortName": "CC_47_UP"
+	},
+	{"name": "CC_47_DN",
+	 "title": "MIDI CC 47 DOWN",
+	 "shortName": "CC_47_DN"
+	},
+	{"name": "CC_48_UP",
+	 "title": "MIDI CC 48 UP",
+	 "shortName": "CC_48_UP"
+	},
+	{"name": "CC_48_DN",
+	 "title": "MIDI CC 48 DOWN",
+	 "shortName": "CC_48_DN"
+	},
+	{"name": "CC_49_UP",
+	 "title": "MIDI CC 49 UP",
+	 "shortName": "CC_49_UP"
+	},
+	{"name": "CC_49_DN",
+	 "title": "MIDI CC 49 DOWN",
+	 "shortName": "CC_49_DN"
+	},
+	{"name": "CC_50_UP",
+	 "title": "MIDI CC 50 UP",
+	 "shortName": "CC_50_UP"
+	},
+	{"name": "CC_50_DN",
+	 "title": "MIDI CC 50 DOWN",
+	 "shortName": "CC_50_DN"
+	},
+	{"name": "CC_51_UP",
+	 "title": "MIDI CC 51 UP",
+	 "shortName": "CC_51_UP"
+	},
+	{"name": "CC_51_DN",
+	 "title": "MIDI CC 51 DOWN",
+	 "shortName": "CC_51_DN"
+	},
+	{"name": "CC_52_UP",
+	 "title": "MIDI CC 52 UP",
+	 "shortName": "CC_52_UP"
+	},
+	{"name": "CC_52_DN",
+	 "title": "MIDI CC 52 DOWN",
+	 "shortName": "CC_52_DN"
+	},
+	{"name": "CC_53_UP",
+	 "title": "MIDI CC 53 UP",
+	 "shortName": "CC_53_UP"
+	},
+	{"name": "CC_53_DN",
+	 "title": "MIDI CC 53 DOWN",
+	 "shortName": "CC_53_DN"
+	},
+	{"name": "CC_54_UP",
+	 "title": "MIDI CC 54 UP",
+	 "shortName": "CC_54_UP"
+	},
+	{"name": "CC_54_DN",
+	 "title": "MIDI CC 54 DOWN",
+	 "shortName": "CC_54_DN"
+	},
+	{"name": "CC_55_UP",
+	 "title": "MIDI CC 55 UP",
+	 "shortName": "CC_55_UP"
+	},
+	{"name": "CC_55_DN",
+	 "title": "MIDI CC 55 DOWN",
+	 "shortName": "CC_55_DN"
+	},
+	{"name": "CC_56_UP",
+	 "title": "MIDI CC 56 UP",
+	 "shortName": "CC_56_UP"
+	},
+	{"name": "CC_56_DN",
+	 "title": "MIDI CC 56 DOWN",
+	 "shortName": "CC_56_DN"
+	},
+	{"name": "CC_57_UP",
+	 "title": "MIDI CC 57 UP",
+	 "shortName": "CC_57_UP"
+	},
+	{"name": "CC_57_DN",
+	 "title": "MIDI CC 57 DOWN",
+	 "shortName": "CC_57_DN"
+	},
+	{"name": "CC_58_UP",
+	 "title": "MIDI CC 58 UP",
+	 "shortName": "CC_58_UP"
+	},
+	{"name": "CC_58_DN",
+	 "title": "MIDI CC 58 DOWN",
+	 "shortName": "CC_58_DN"
+	},
+	{"name": "CC_59_UP",
+	 "title": "MIDI CC 59 UP",
+	 "shortName": "CC_59_UP"
+	},
+	{"name": "CC_59_DN",
+	 "title": "MIDI CC 59 DOWN",
+	 "shortName": "CC_59_DN"
+	},
+	{"name": "CC_60_UP",
+	 "title": "MIDI CC 60 UP",
+	 "shortName": "CC_60_UP"
+	},
+	{"name": "CC_60_DN",
+	 "title": "MIDI CC 60 DOWN",
+	 "shortName": "CC_60_DN"
+	},
+	{"name": "CC_61_UP",
+	 "title": "MIDI CC 61 UP",
+	 "shortName": "CC_61_UP"
+	},
+	{"name": "CC_61_DN",
+	 "title": "MIDI CC 61 DOWN",
+	 "shortName": "CC_61_DN"
+	},
+	{"name": "CC_62_UP",
+	 "title": "MIDI CC 62 UP",
+	 "shortName": "CC_62_UP"
+	},
+	{"name": "CC_62_DN",
+	 "title": "MIDI CC 62 DOWN",
+	 "shortName": "CC_62_DN"
+	},
+	{"name": "CC_63_UP",
+	 "title": "MIDI CC 63 UP",
+	 "shortName": "CC_63_UP"
+	},
+	{"name": "CC_63_DN",
+	 "title": "MIDI CC 63 DOWN",
+	 "shortName": "CC_63_DN"
+	}
+  ],
+    "vial": {
+        "midi": "advanced"
+    },
+	"lighting": "vialrgb",
+    "matrix": {
+        "rows": 3,
+        "cols": 3
+    },
+    "layouts": {
+        "keymap":[
+  [
+    "0,0\n\n\n\n\n\n\n\n\ne",
+    "0,1\n\n\n\n\n\n\n\n\ne",
+    {
+      "x": 0.5
+    },
+    "1,0\n\n\n\n\n\n\n\n\ne",
+    "1,1\n\n\n\n\n\n\n\n\ne"
+  ],
+  [
+    {
+      "x": 0.5
+    },
+    "0,0",
+    {
+      "x": 1.5
+    },
+    "0,2"
+  ],
+  [
+    {
+      "y": -0.75,
+      "x": 1.75
+    },
+    "0,1"
+  ],
+  [
+    {
+      "x": 0.75
+    },
+    "1,0",
+    "1,1",
+    "1,2"
+  ],
+  [
+    {
+      "x": 1.75
+    },
+    "2,1"
+  ],
+  [
+    {
+      "y": -0.75,
+      "x": 0.5
+    },
+    "2,0",
+    {
+      "x": 1.5
+    },
+    "2,2"
+  ],
+  [
+    "2,0\n\n\n\n\n\n\n\n\ne",
+    "2,1\n\n\n\n\n\n\n\n\ne",
+    {
+      "x": 0.5
+    },
+    "3,0\n\n\n\n\n\n\n\n\ne",
+    "3,1\n\n\n\n\n\n\n\n\ne"
+  ]
+]
+    }
+}
