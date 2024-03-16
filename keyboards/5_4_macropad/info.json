@@ -3,7 +3,6 @@
     "keyboard_name": "5_4_macropad",
     "maintainer": "Var",
     "bootloader": "rp2040",
-	"debounce": 1,
     "features": {
         "bootmagic": true,
         "command": false,
