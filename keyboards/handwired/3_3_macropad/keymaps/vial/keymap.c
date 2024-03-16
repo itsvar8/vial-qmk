@@ -3,16 +3,27 @@
 
 #include QMK_KEYBOARD_H
 
-bool is_alt_tab_active = false; // ADD this near the beginning of keymap.c
-uint16_t alt_tab_timer = 0;     // we will be using them soon.
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
 
-// Define the keycode, `QK_USER` avoids collisions with existing keycodes
-enum keycodes {
-  CYCLE_LAYERS = QK_KB_0,
+bool is_layer_move_active = false;
+uint16_t layer_move_timer = 0;
+
+int8_t current_MIDI_cc = 0;
+
+enum custom_keycodes {
+  NEXT_LAYER = QK_KB_0,
+  PREV_LAYER,
   ALT_TAB,
   INV_ALT_TAB,
   ALT_ESC,
   XPLR,
+  UNDO,
+  REDO,
+  REDO_Y,
+  SCR_REC,
+  CLR_EPR,
+  CLR_KBD,
 };
 
 // 1st layer on the cycle
@@ -23,7 +34,55 @@ enum keycodes {
 // Add the behaviour of this new keycode
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-	case ALT_TAB:
+    case NEXT_LAYER:
+      if (record->event.pressed) {
+		if (!is_layer_move_active) {
+		is_layer_move_active = true;
+		}
+	  layer_move_timer = timer_read();
+      } else {
+		  if (is_layer_move_active) {
+		  uint8_t current_layer = get_highest_layer(layer_state);
+	      
+          // Check if we are within the range, if not quit
+          if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
+            return false;
+          }
+	      
+          uint8_t next_layer = current_layer + 1;
+          if (next_layer > LAYER_CYCLE_END) {
+              next_layer = LAYER_CYCLE_START;
+          }
+          layer_move(next_layer);
+		  is_layer_move_active = false;
+		  }
+	  }
+      break;
+	case PREV_LAYER:
+      if (record->event.pressed) {
+		if (!is_layer_move_active) {
+		is_layer_move_active = true;
+		}
+	  layer_move_timer = timer_read();
+      } else {
+		  if (is_layer_move_active) {
+		  int8_t current_layer2 = get_highest_layer(layer_state);
+
+          // Check if we are within the range, if not quit
+          if (current_layer2 > LAYER_CYCLE_END || current_layer2 < LAYER_CYCLE_START) {
+            return false;
+          }
+
+          int8_t prev_layer = current_layer2 - 1;
+          if (prev_layer < LAYER_CYCLE_START) {
+              prev_layer = LAYER_CYCLE_END;
+          }
+          layer_move(prev_layer);
+		  is_layer_move_active = false;
+		  }
+	  }
+      break;
+    case ALT_TAB:
       if (record->event.pressed) {
         if (!is_alt_tab_active) {
           is_alt_tab_active = true;
@@ -65,46 +124,76 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		unregister_code(KC_LGUI);
 	  }
 	  break;
-    case CYCLE_LAYERS:
-      // Our logic will happen on presses, nothing is done on releases
-      if (!record->event.pressed) { 
-        // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
-        return false;
-      }
-
-      uint8_t current_layer = get_highest_layer(layer_state);
-
-      // Check if we are within the range, if not quit
-      if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
-        return false;
-      }
-
-      uint8_t next_layer = current_layer + 1;
-      if (next_layer > LAYER_CYCLE_END) {
-          next_layer = LAYER_CYCLE_START;
-      }
-      layer_move(next_layer);
-      return false;
-
-    // Process other keycodes normally
-    default:
-      return true;
+	case UNDO:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  tap_code(KC_Z);
+	  } else {
+		unregister_code(KC_LCTL);
+	  }
+	  break;
+	case REDO:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  register_code(KC_LSFT);
+		  tap_code(KC_Z);
+	  } else {
+		unregister_code(KC_LCTL);
+		unregister_code(KC_LSFT);
+	  }
+	  break;
+	case REDO_Y:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  tap_code(KC_Y);
+	  } else {
+		unregister_code(KC_LCTL);
+	  }
+	  break;
+	case SCR_REC:
+	  if (record->event.pressed) {
+		  register_code(KC_LCTL);
+		  register_code(KC_LSFT);
+		  tap_code(KC_E);
+	  } else {
+		unregister_code(KC_LCTL);
+		unregister_code(KC_LSFT);
+	  }
+	  break;
+	case CLR_EPR:
+	  if (record->event.pressed) {
+		  eeconfig_init();
+	  } else {
+	  }
+	  break;
+	case CLR_KBD:
+	  if (record->event.pressed) {
+		  clear_keyboard();
+	  } else {
+	  }
+	  break;
   }
   return true;
 }
 
-void matrix_scan_user(void) { // The very important timer.
+void matrix_scan_user(void) {
   if (is_alt_tab_active) {
     if (timer_elapsed(alt_tab_timer) > 800) {
       is_alt_tab_active = false;
 	  unregister_code(KC_LALT);
     }
   }
+  if (is_layer_move_active) {
+    if (timer_elapsed(layer_move_timer) > 250) {
+	  is_layer_move_active = false;
+	  layer_move(0);
+	}
+  }
 }
 
 void keyboard_post_init_user(void) {
-    vial_tap_dance_entry_t td = { CYCLE_LAYERS,
-                                  TO(0),
+    vial_tap_dance_entry_t td = { KC_NO,
+                                  KC_NO,
                                   KC_NO,
                                   KC_NO,
                                   TAPPING_TERM };
@@ -122,32 +211,56 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * └───┴───┘
      */
     [0] = LAYOUT_default(
-        KC_A,    KC_D,
-        KC_B,    KC_E,
-        KC_C,    TD(0)
+        KC_A,       KC_D,
+        KC_B,       KC_E,
+        KC_C,       NEXT_LAYER
 	),
 	[1] = LAYOUT_default(
-        KC_A,    KC_D,
-        KC_B,    KC_E,
-        KC_C,    TD(0)
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
 	),
 	[2] = LAYOUT_default(
-        KC_A,    KC_D,
-        KC_B,    KC_E,
-        KC_C,    TD(0)
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
 	),
 	[3] = LAYOUT_default(
-        KC_A,    KC_D,
-        KC_B,    KC_E,
-        KC_C,    TD(0)
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
+    ),
+	[4] = LAYOUT_default(
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
+    ),
+	[5] = LAYOUT_default(
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
+    ),
+	[6] = LAYOUT_default(
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
+    ),
+	[7] = LAYOUT_default(
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS,
+        KC_TRNS,    KC_TRNS
     ),
 };
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [0] = {  ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [1] = {  ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [2] = {  ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_SPD, RGB_SPI),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [3] = {  ENCODER_CCW_CW(RGB_RMOD, RGB_MOD),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [1] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
+    [2] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
+    [3] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
+    [4] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
+    [5] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
+    [6] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
+    [7] = {  ENCODER_CCW_CW(KC_TRNS, KC_TRNS),           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),  ENCODER_CCW_CW(KC_TRNS, KC_TRNS)  },
 };
 #endif

@@ -1,24 +1,52 @@
 {
 	"customKeycodes": [
-	{"name": "Cycle Layers",
-	 "title": "Cycle Layers",
-	 "shortName": "CYCLE_LAYERS"
+	{"name": "Next Layer",
+	 "title": "Next Layer",
+	 "shortName": "NEXT_LAYER"
+	},
+	{"name": "Previous Layer",
+	 "title": "Previous Layer",
+	 "shortName": "PREV_LAYER"
 	},
 	{"name": "Super Alt Tab",
-	 "title": "Super Alt Tab",
+	 "title": "Use in combination with the inverted version on an encoder to quickly switch between opened apps",
 	 "shortName": "ALT_TAB"
 	},
 	{"name": "Inverted Super Alt Tab",
-	 "title": "Inverted Super Alt Tab",
+	 "title": "Use in combination with the non inverted version on an encoder to quickly switch between opened apps",
 	 "shortName": "INV_ALT_TAB"
 	},
 	{"name": "Alt Esc",
-	 "title": "Alt Esc",
+	 "title": "Cycles through the active windows in the order they were opened (Alt + Esc)",
 	 "shortName": "ALT_ESC"
 	},
 	{"name": "XPLR",
-	 "title": "New Explorer Window",
+	 "title": "New Explorer Window (Win + E)",
 	 "shortName": "XPLR"
+	},
+	{"name": "Undo",
+	 "title": "Ctrl + Z",
+	 "shortName": "UNDO"
+	},
+	{"name": "Redo",
+	 "title": "Ctrl + Shift + Z",
+	 "shortName": "REDO"
+	},
+	{"name": "Redo Alternative",
+	 "title": "Ctrl + Y",
+	 "shortName": "REDO_Y"
+	},
+	{"name": "Rec",
+	 "title": "AMD Screen Record (Ctrl + Shift + E)",
+	 "shortName": "SCR_REC"
+	},
+	{"name": "Clear EEPROM",
+	 "title": "Reinitializes the keyboard’s EEPROM (persistent memory)",
+	 "shortName": "CLR_EPR"
+	},
+	{"name": "Clear Keyboard",
+	 "title": "This will clear all mods and keys currently pressed",
+	 "shortName": "CLR_KBD"
 	}
   ],
     "lighting": "vialrgb",

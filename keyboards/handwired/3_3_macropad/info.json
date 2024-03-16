@@ -1,9 +1,8 @@
 {
     "manufacturer": "Var",
     "keyboard_name": "3_3_macropad",
-    "maintainer": ".",
+    "maintainer": "Var",
     "bootloader": "caterina",
-    "debounce": 1,
     "features": {
         "bootmagic": true,
         "command": false,
