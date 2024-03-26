@@ -6,7 +6,7 @@
 
 * Keyboard Maintainer: [Var](https://github.com/itsvar8)
 * Hardware Supported: RP2040
-* Hardware Availability: [Etsy](https://)
+* Hardware Availability: [Etsy](https://keeptyping.etsy.com/it/listing/1688938145/macropad-con-5-tasti-e-4-encoder)
 
 Make example for this keyboard (after setting up your build environment):
 
