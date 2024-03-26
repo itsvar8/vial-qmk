@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
+//#include <sendstring_italian.h>
 
 extern MidiDevice midi_device;
 
@@ -242,14 +243,14 @@ void matrix_scan_user(void) {
   }
 }
 
-void keyboard_post_init_user(void) {
-    vial_tap_dance_entry_t td = { KC_NO,
-                                  KC_NO,
-                                  KC_NO,
-                                  KC_NO,
-                                  TAPPING_TERM };
-    dynamic_keymap_set_tap_dance(0, &td); // the first value corresponds to the TD(i) slot
-}
+//void keyboard_post_init_user(void) {
+//    vial_tap_dance_entry_t td = { KC_NO,
+//                                  KC_NO,
+//                                  KC_NO,
+//                                  KC_NO,
+//                                  TAPPING_TERM };
+//    dynamic_keymap_set_tap_dance(0, &td); // the first value corresponds to the TD(i) slot
+//}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_default(
