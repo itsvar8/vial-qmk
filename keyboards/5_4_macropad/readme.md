@@ -1,7 +1,6 @@
 # 5_4_macropad
 
-![5_4_macropad](![5_4_macropad](https://github.com/itsvar8/vial-qmk/assets/120035196/bbe42ad6-177b-405a-b880-26e5daa76587)
-)
+![5_4_macropad](https://github.com/itsvar8/vial-qmk/assets/120035196/bbe42ad6-177b-405a-b880-26e5daa76587)
 
 3x3 macropad with 4 encoders and rgb
 
