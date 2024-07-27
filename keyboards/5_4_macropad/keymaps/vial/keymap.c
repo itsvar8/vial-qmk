@@ -3,6 +3,7 @@
 
 #include QMK_KEYBOARD_H
 //#include <sendstring_italian.h>
+#include <raw_hid.h>
 
 extern MidiDevice midi_device;
 
@@ -184,13 +185,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	  break;
 	case MIDI_UP:
 	  if (record->event.pressed) {
-          midi_send_cc(&midi_device, 0, current_MIDI_cc, 65);
+          midi_send_cc(&midi_device, midi_config.channel, current_MIDI_cc, 65);
 	  } else {
 	  }
 	  break;
 	case MIDI_DN:
 	  if (record->event.pressed) {
-          midi_send_cc(&midi_device, 0, current_MIDI_cc, 63);
+          midi_send_cc(&midi_device, midi_config.channel, current_MIDI_cc, 63);
 	  } else {
 	  }
 	  break;
@@ -236,11 +237,95 @@ void matrix_scan_user(void) {
     }
   }
   if (is_layer_move_active) {
-    if (timer_elapsed(layer_move_timer) > 250) {
+    if (timer_elapsed(layer_move_timer) > 280) {
 	  is_layer_move_active = false;
 	  layer_move(0);
 	}
   }
+}
+
+enum my_command_id {
+    id_current_cc              = 0x41,
+	id_current_channel         = 0x42,
+};
+
+void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
+	uint8_t *command_id   = &(data[0]);
+	
+	switch (*command_id) {
+        case id_current_cc: {
+            uint8_t response[length];
+			memset(response, 0, length);
+			
+			/* count number of digits */
+			int c = 0; /* digit position */
+			int n = current_MIDI_cc;
+
+			while (n != 0)
+			{
+				n /= 10;
+				c++;
+			}
+
+			int numberArray[c];
+
+			c = 0;    
+			n = current_MIDI_cc;
+
+			/* extract each digit */
+			while (n != 0)
+			{
+				numberArray[c] = n % 10;
+				n /= 10;
+				c++;
+			}
+			
+			int i;
+			size_t max = sizeof(numberArray)/sizeof(numberArray[0]);
+			for (i = 0; i < max; i++) {
+				response[i] = numberArray[i];
+			}
+
+			raw_hid_send(response, length);
+            break;
+        }
+		case id_current_channel: {
+            uint8_t response[length];
+			memset(response, 0, length);
+			
+			/* count number of digits */
+			int c = 0; /* digit position */
+			int n = midi_config.channel;
+
+			while (n != 0)
+			{
+				n /= 10;
+				c++;
+			}
+
+			int numberArray[c];
+
+			c = 0;    
+			n = midi_config.channel;
+
+			/* extract each digit */
+			while (n != 0)
+			{
+				numberArray[c] = n % 10;
+				n /= 10;
+				c++;
+			}
+			
+			int i;
+			size_t max = sizeof(numberArray)/sizeof(numberArray[0]);
+			for (i = 0; i < max; i++) {
+				response[i] = numberArray[i];
+			}
+
+			raw_hid_send(response, length);
+            break;
+        }
+	}
 }
 
 //void keyboard_post_init_user(void) {
