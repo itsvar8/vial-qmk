@@ -26,20 +26,15 @@
 #define ENCODER_DIRECTION_FLIP
 #define ENCODER_MAP_KEY_DELAY 0
 
-
-#define TAP_CODE_DELAY 28
-
-#define WS2812_DI_PIN GP0
 #define DRIVER_LED_TOTAL 34
 #define RGB_MATRIX_LED_COUNT 34
 
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 
-#define RGB_DISABLE_WHEN_USB_SUSPENDED
+#define RGB_MATRIX_SLEEP
 
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_UP_DOWN // Sets the default mode, if none has been set
-#define RGB_MATRIX_DEFAULT_SPD 50 // Sets the default animation speed, if none has been set
 
 #define ENABLE_RGB_MATRIX_ALPHAS_MODS
 #define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
