@@ -1,5 +1,6 @@
 # cstc40
 
+![CSTC40](https://github.com/user-attachments/assets/2be701a8-c2eb-48a4-8c0a-4ecc5efb8c4d)
 A 40% hotswap ortholinear RGB keyboard from KP Republic.
 
 * Keyboard Maintainer: [Var](https://github.com/itsvar8)
