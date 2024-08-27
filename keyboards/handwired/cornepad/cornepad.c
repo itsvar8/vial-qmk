@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "quantum.h"
-#include "rgb_layers.c"
+#include "../../../qmk_shared/rgb_layers.h"
 
 #ifdef RGB_MATRIX_ENABLE
 
