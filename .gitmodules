@@ -25,3 +25,6 @@
 	path = lib/lvgl
 	url = https://github.com/qmk/lvgl.git
 	branch = release/v8.2
+[submodule "qmk_shared"]
+	path = qmk_shared
+	url = https://github.com/itsvar8/qmk_shared.git
