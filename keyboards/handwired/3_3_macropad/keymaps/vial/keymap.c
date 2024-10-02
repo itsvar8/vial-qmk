@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
+#include <raw_hid.h>
 
 bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
@@ -191,14 +192,110 @@ void matrix_scan_user(void) {
   }
 }
 
-void keyboard_post_init_user(void) {
-    vial_tap_dance_entry_t td = { KC_NO,
-                                  KC_NO,
-                                  KC_NO,
-                                  KC_NO,
-                                  TAPPING_TERM };
-    dynamic_keymap_set_tap_dance(0, &td); // the first value corresponds to the TD(i) slot
+enum my_command_id {
+	id_current_layer   = 0x40,
+	id_layer_0         = 0x30,
+	id_layer_1         = 0x31,
+	id_layer_2         = 0x32,
+	id_layer_3         = 0x33,
+	id_layer_4         = 0x34,
+	id_layer_5         = 0x35,
+	id_layer_6         = 0x36,
+	id_layer_7         = 0x37,
+	id_layer_8         = 0x38,
+	id_layer_9         = 0x39,
+};
+
+void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
+	uint8_t *command_id   = &(data[0]);
+	switch (*command_id) {
+		case id_current_layer: {
+            uint8_t response[length];
+			memset(response, 0, length);
+			
+			/* count number of digits */
+			int c = 0; /* digit position */
+			int n = get_highest_layer(layer_state);
+
+			while (n != 0)
+			{
+				n /= 10;
+				c++;
+			}
+
+			int numberArray[c];
+
+			c = 0;    
+			n = get_highest_layer(layer_state);
+
+			/* extract each digit */
+			while (n != 0)
+			{
+				numberArray[c] = n % 10;
+				n /= 10;
+				c++;
+			}
+			
+			int i;
+			size_t max = sizeof(numberArray)/sizeof(numberArray[0]);
+			for (i = 0; i < max; i++) {
+				response[i] = numberArray[i];
+			}
+
+			raw_hid_send(response, length);
+            break;
+        }
+		case id_layer_0: {
+            layer_move(0);
+            break;
+        }
+		case id_layer_1: {
+            layer_move(1);
+            break;
+        }
+		case id_layer_2: {
+            layer_move(2);
+            break;
+        }
+		case id_layer_3: {
+            layer_move(3);
+            break;
+        }
+		case id_layer_4: {
+            layer_move(4);
+            break;
+        }
+		case id_layer_5: {
+            layer_move(5);
+            break;
+        }
+		case id_layer_6: {
+			layer_move(6);
+            break;
+        }
+		case id_layer_7: {
+            layer_move(7);
+            break;
+        }
+		case id_layer_8: {
+            layer_move(8);
+            break;
+        }
+		case id_layer_9: {
+            layer_move(9);
+            break;
+        }
+	}
 }
+
+//void keyboard_post_init_user(void) {
+//    vial_tap_dance_entry_t td = { KC_NO,
+//                                  KC_NO,
+//                                  KC_NO,
+//                                  KC_NO,
+//                                  TAPPING_TERM };
+//    dynamic_keymap_set_tap_dance(0, &td); // the first value corresponds to the TD(i) slot
+//}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
