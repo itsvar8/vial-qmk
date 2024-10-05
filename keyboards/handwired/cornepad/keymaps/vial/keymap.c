@@ -45,10 +45,12 @@ enum custom_keycodes {
 #define LAYER_CYCLE_END   9
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
+  if (!any_key_down) {
+	if (record->event.pressed) {
       any_key_down = true;
-  } else {
+    } else {
 	  any_key_down = false;
+    }
   }
   switch (keycode) {
     case NEXT_LAYER:
