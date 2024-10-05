@@ -16,6 +16,7 @@ uint16_t layer_move_timer = 0;
 int8_t current_MIDI_cc = 0;
 
 bool any_key_down = false;
+uint16_t held_key = 0;
 
 enum custom_keycodes {
   NEXT_LAYER = QK_KB_0,
@@ -47,9 +48,15 @@ enum custom_keycodes {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-      any_key_down = true;
+	if (!any_key_down) {
+	  held_key = keycode;
+	}
+	any_key_down = true;
   } else {
-	  any_key_down = false;
+	  if (keycode == held_key) {
+	    any_key_down = false;
+	    held_key = 0;
+	  }
   }
   switch (keycode) {
     case NEXT_LAYER:
