@@ -12,6 +12,9 @@ uint16_t layer_move_timer = 0;
 
 int8_t current_MIDI_cc = 0;
 
+bool any_key_down = false;
+uint16_t held_key = 0;
+
 enum custom_keycodes {
   NEXT_LAYER = QK_KB_0,
   PREV_LAYER,
@@ -34,6 +37,17 @@ enum custom_keycodes {
 
 // Add the behaviour of this new keycode
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+	if (!any_key_down) {
+	  held_key = keycode;
+	}
+	any_key_down = true;
+  } else {
+	  if (keycode == held_key) {
+	    any_key_down = false;
+	    held_key = 0;
+	  }
+  }
   switch (keycode) {
     case NEXT_LAYER:
       if (record->event.pressed) {
@@ -246,43 +260,63 @@ void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
             break;
         }
 		case id_layer_0: {
-            layer_move(0);
+            if (!any_key_down) {
+				layer_move(0);
+			}
             break;
         }
 		case id_layer_1: {
-            layer_move(1);
+            if (!any_key_down) {
+				layer_move(1);
+			}
             break;
         }
 		case id_layer_2: {
-            layer_move(2);
+            if (!any_key_down) {
+				layer_move(2);
+			}
             break;
         }
 		case id_layer_3: {
-            layer_move(3);
+            if (!any_key_down) {
+				layer_move(3);
+			}
             break;
         }
 		case id_layer_4: {
-            layer_move(4);
+            if (!any_key_down) {
+				layer_move(4);
+			}
             break;
         }
 		case id_layer_5: {
-            layer_move(5);
+            if (!any_key_down) {
+				layer_move(5);
+			}
             break;
         }
 		case id_layer_6: {
-			layer_move(6);
+			if (!any_key_down) {
+				layer_move(6);
+			}
             break;
         }
 		case id_layer_7: {
-            layer_move(7);
+            if (!any_key_down) {
+				layer_move(7);
+			}
             break;
         }
 		case id_layer_8: {
-            layer_move(8);
+            if (!any_key_down) {
+				layer_move(8);
+			}
             break;
         }
 		case id_layer_9: {
-            layer_move(9);
+            if (!any_key_down) {
+				layer_move(9);
+			}
             break;
         }
 	}
