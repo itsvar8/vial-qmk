@@ -1,7 +1,7 @@
 # cornepad
 
-![cornepad](https://from2d.com/wp-content/uploads/2024/01/cornepad-2000px.png)
-Build guide and 3D files --> [from2D.com](https://from2d.com/) --> Freebies
+![cornepad-2000px](https://github.com/user-attachments/assets/e6f865d7-0b66-499b-b8ae-9dc743c66138)
+Build guide and 3D files --> https://varotto.work/projects/cornepad
 
 Single piece 36 keys Corne layout with a center 4*4 numpad, 2 rotary encoders and RGB. ( -7.5 | 0 | +7.5 ) deg. rotation
 
